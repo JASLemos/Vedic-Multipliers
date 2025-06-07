@@ -3,7 +3,7 @@
 module Multiplier16x16_tb;
 
   reg [15:0] A;       // 8-bit input A
-  reg [15:0] B;       // 8-bit input B           // Clock signal
+  reg [15:0] B;       // 8-bit input B 
   wire [32:0] Product; // 16-bit output Product
 
   // Instantiate the multiplier8x8 module
