@@ -1,11 +1,10 @@
-module Multiplier8x8#(parameter N = 8)(input [N-1:0] A, B,
-							input clk,
-                     output reg [N*2-1:0] Product);
+module Multiplier8x8#(parameter N = 8)(
+   input [N-1:0] A, B,
+   output reg [N*2-1:0] Product
+);
 
     wire [N-1:0] m1, m2, m3, m4, m5, m6,m7;
     wire Carry, Cout;
-	 reg [N-1:0] A_reg, B_reg;
-	 
 
     Multiplier4x4 mul1(.A(A[N/2-1:0]), .B(B[N/2-1:0]), .clk(clk), .Product(m1));
     Multiplier4x4 mul2(.A(A[N-1:N/2]), .B(B[N/2-1:0]), .clk(clk), .Product(m2));
@@ -16,11 +15,6 @@ module Multiplier8x8#(parameter N = 8)(input [N-1:0] A, B,
     EightBitAdder add2(.A({4'b0000,m1[N-1:N/2]}), .B(m5), .Cin(1'b0), .Sum(m6), .Cout(Cout));
     EightBitAdder add3(.A({3'b000,Carry,m6[N-1:N/2]}), .B(m4), .Cin(1'b0), .Sum(m7), .Cout(Cout));
 	 
-	 always@(posedge clk)
-	 begin
-			A_reg <= A;
-			B_reg <= B;
-			Product = {m7,m6[N/2-1:0],m1[N/2-1:0]};
-	 end
+    assign Product = {m7,m6[N/2-1:0],m1[N/2-1:0]};
 
 endmodule
